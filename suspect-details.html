@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Most Wanted Criminals - Details</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #333;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            text-align: center;
+        }
+        h1 {
+            color: red;
+            font-size: 36px;
+        }
+        h2 {
+            color: orange;
+            margin-top: 10px;
+        }
+        p {
+            color: white;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .brief-info {
+            background-color: #444;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .details-section {
+            margin-top: 30px;
+        }
+        .details-section img {
+            width: 200px;
+            margin: 10px;
+            border-radius: 8px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .back-button {
+            background-color: #dc3545;
+        }
+        .back-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="suspectName">Details of Suspect</h1>
+        <div class="brief-info" id="criminalCharge">
+            <h2>Criminal Charge:</h2>
+            <p id="chargeDescription"></p>
+        </div>
+
+        <div class="details-section">
+            <h2>Additional Information:</h2>
+            <p><strong>Race:</strong> <span id="race"></span></p>
+            <p><strong>Eye Color:</strong> <span id="eyeColor"></span></p>
+            <p><strong>Place of Birth:</strong> <span id="birthPlace"></span></p>
+
+            <h2>Photos</h2>
+            <img id="frontImage" src="" alt="Front View">
+            <img id="backImage" src="" alt="Back View">
+            <img id="sideImage" src="" alt="Side View">
+        </div>
+
+        <div class="buttons">
+            <button class="back-button" onclick="window.history.back()">Go Back</button>
+        </div>
+    </div>
+
+    <script>
+        // Get the case number from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const caseNumber = urlParams.get('caseNumber');
+
+
+        // Data of most wanted suspects
+        const Most_Wanted = {
+            "0011": { 
+                "Name_Of_Suspact": "Ebenca Mohlala", 
+                "Criminal_Charge": "Attempting to overthrow the government", 
+                "brief": "Ebenca is wanted for attempting to overthrow the government in 2024, with political affiliations driving this action.", 
+                "Person_information": { 
+                    "Race": "Black", 
+                    "Eye_Color": "Brown", 
+                    "Birth_Place": "Soshanguve", 
+                    "Image_Front": "WhatsApp Image 2024-08-12 at 12.34.56_3b82af2d.jpg", 
+                
+                }
+            },
+            "3390": {
+                "Case_Number": "K920",
+                "Name_Of_Suspact": "El Chapo",
+                "Criminal_Charge": "Drug Lord",
+                "brief": "El Chapo is a notorious drug lord involved in large-scale drug trafficking.",
+                "Person_information": {
+                    "Race": "Hispanic",
+                    "Eye_Color": "Brown",
+                    "Birth_Place": "Sinaloa, Mexico",
+                    "Image_Front": "el.jpg",
+                    "Image_Back": "el b.jpg",
+                    "Image_Side": "th.jpg"
+                }
+            },
+            "9039": {
+                "Case_Number": "O029",
+                "Name_Of_Suspact": "Pablo Escobar",
+                "Criminal_Charge": "Drug Lord",
+                "brief": "Pablo Escobar, one of the richest criminals, ran a drug cartel responsible for 80% of cocaine smuggled into the US.",
+                "Person_information": {
+                    "Race": "Hispanic",
+                    "Eye_Color": "Brown",
+                    "Birth_Place": "Rionegro, Colombia",
+                    "Image_Front": "pablo.jpg",
+                    "Image_Back": "pablo3.jpg",
+                    "Image_Side": "pablo2.jpg"
+                }
+            },
+            "9823": {
+                "Case_Number": "I2IN",
+                "Name_Of_Suspact": "Lenzo Da Bonza",
+                "Criminal_Charge": "Human Trafficker",
+                "brief": "Lenzo Da Bonza is charged with large-scale human trafficking across borders.",
+                "Person_information": {
+                    "Race": "Caucasian",
+                    "Eye_Color": "Green",
+                    "Birth_Place": "Rome, Italy",
+                    "Image_Front": "c.jpg",
+                    "Image_Back": "c2.jpg",
+                    "Image_Side": "c3.jpg"
+                }
+            },
+            "3290": {
+                "Case_Number": "NID2",
+                "Name_Of_Suspact": "Kim Jong Un",
+                "Criminal_Charge": "Dictator",
+                "brief": "Kim Jong Un is charged with human rights abuses and dictatorship.",
+                "Person_information": {
+                    "Race": "Asian",
+                    "Eye_Color": "Black",
+                    "Birth_Place": "Pyongyang, North Korea",
+                    "Image_Front": "kim2.jpg",
+                    "Image_Back": "kim.jpg",
+                    "Image_Side": "kim3.jpg"
+                }
+            }
+        };
+
+        // Dynamically load the suspect's details
+        if (Most_Wanted[caseNumber]) {
+            const person = Most_Wanted[caseNumber];
+            const additionalInfo = person.Person_information;
+
+            document.getElementById('suspectName').innerText = `Details of Suspect: ${person.Name_Of_Suspact}`;
+            document.getElementById('chargeDescription').innerText = person.brief;
+            document.getElementById('race').innerText = additionalInfo.Race;
+            document.getElementById('eyeColor').innerText = additionalInfo.Eye_Color;
+            document.getElementById('birthPlace').innerText = additionalInfo.Birth_Place;
+            document.getElementById('frontImage').src = additionalInfo.Image_Front;
+            document.getElementById('backImage').src = additionalInfo.Image_Back;
+            document.getElementById('sideImage').src = additionalInfo.Image_Side;
+        } else {
+            document.getElementById('suspectName').innerText = "No information found for this suspect.";
+        }
+    </script>
+</body>
+</html>

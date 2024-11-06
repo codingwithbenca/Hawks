@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Most Wanted Database</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: Black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            height: 400px; /* Increased container height */
+            margin: 50px auto;
+            padding: 20px;
+            background-color: black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+            border-radius: 8px;
+            text-align: center;
+            position: relative; /* Needed for absolute positioning */
+            overflow: hidden; /* To make the image fit within the container */
+        }
+
+        h1 {
+            color: red;
+            position: relative; /* To position content over the image */
+            z-index: 1;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: red;
+            position: relative;
+            z-index: 1;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+h1 i {
+    margin-right: 10px; /* Adds some space between the icon and the text */
+    color: red; /* Change color of the eye icon */
+}
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #error {
+            color: red;
+            position: relative;
+            z-index: 1;
+        }
+
+      
+         .p{
+		 color:red;
+		 position:center;
+		 }
+		 
+        /* Image to cover the entire container */
+        .container-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image covers the container fully */
+            z-index: 0; /* Behind all other elements */
+            opacity: 2; /* Make the image semi-transparent for better text visibility */
+        }
+      .brief-info {
+    color: red;
+    margin-bottom: 20px;
+}
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Background Image -->
+    <img src="OIP (8).jpg" alt="Criminal Search Image" class="container-image">
+   
+    
+    <h1><i class="fas fa-eye"></i> Most Wanted Criminals</h1>
+
+	
+
+    
+
+    <form id="searchForm">
+        <label for="caseNumber">Enter Case Number:</label>
+        <input type="text" id="caseNumber" placeholder="e.g., 0011">
+        <button type="submit">Search</button>
+    </form>
+    <div id="result"></div>
+</div>
+ <p class="brief-info">
+        This system allows law enforcement agencies and the public to access detailed information about high-profile criminals wanted for serious offenses.
+        By entering a case number, you can view information about suspects, their criminal charges, and additional personal details such as their physical appearance and place of birth.
+        This database is designed to assist in locating and apprehending dangerous individuals and maintaining public safety.
+    </p>
+
+    <script>
+        // JavaScript data (simulates the back-end Python structure)
+        const Most_Wanted = {
+            "0011": { "Case_Number": "RJ79", "Name_Of_Suspact": "Ebenca Mohlala", "Criminal_Charge": "Trying To Overthrow The Government", "brief": "Ebenca is wanted for attempting to overthrow the government in 2024, with political affiliations driving this action." },
+            "3390": { "Case_Number": "K920", "Name_Of_Suspact": "El Chapo", "Criminal_Charge": "Drug Lord", "brief": "El Chapo is a notorious drug lord involved in large-scale drug trafficking." },
+            "9039": { "Case_Number": "O029", "Name_Of_Suspact": "Pablo Escobar", "Criminal_Charge": "Drug Lord", "brief": "Pablo Escobar, one of the richest criminals, ran a drug cartel responsible for 80% of cocaine smuggled into the US." },
+            "9823": { "Case_Number": "I2IN", "Name_Of_Suspact": "Lenzo Da Bonza", "Criminal_Charge": "Human Trafficker", "brief": "Lenzo Da Bonza is charged with large-scale human trafficking across borders." },
+            "3290": { "Case_Number": "NID2", "Name_Of_Suspact": "Kim Jong Un", "Criminal_Charge": "Dictator", "brief": "Kim Jong Un is charged with human rights abuses and dictatorship." }
+        };
+
+        const Person_information = {
+            "0011": { "Race": "Black", "Eye_Color": "Brown", "Birth_Place": "Soshanguve", "Image_Front": "front-image-url-0011", "Image_Back": "back-image-url-0011", "Image_Side": "side-image-url-0011" },
+            "3390": { "Race": "Colored", "Eye_Color": "Green", "Birth_Place": "Mexico", "Image_Front": "front-image-url-3390", "Image_Back": "back-image-url-3390", "Image_Side": "side-image-url-3390" },
+            "9039": { "Race": "Colored", "Eye_Color": "Brown", "Birth_Place": "Colombia", "Image_Front": "front-image-url-9039", "Image_Back": "back-image-url-9039", "Image_Side": "side-image-url-9039" },
+            "9823": { "Race": "Black", "Eye_Color": "Brown", "Birth_Place": "RSA", "Image_Front": "front-image-url-9823", "Image_Back": "back-image-url-9823", "Image_Side": "side-image-url-9823" },
+            "3290": { "Race": "Asian", "Eye_Color": "White", "Birth_Place": "North Korea", "Image_Front": "front-image-url-3290", "Image_Back": "back-image-url-3290", "Image_Side": "side-image-url-3290" }
+        };
+
+        // Function to redirect to a new page with detailed info
+        // Function to show details for a specific case number
+function showDetails(caseNumber) {
+    if (Most_Wanted[caseNumber]) {
+        const person = Most_Wanted[caseNumber];
+        const additionalInfo = Person_information[caseNumber];
+
+        // Build the new page content dynamically based on the case number
+        const newPageContent = `
+            <h1>Details of ${person.Name_Of_Suspact}</h1>
+            <p><strong>Criminal Charge:</strong> ${person.Criminal_Charge}</p>
+            <p><strong>Brief:</strong> ${person.brief}</p>
+            <h2>Additional Information</h2>
+            <p><strong>Race:</strong> ${additionalInfo.Race}</p>
+            <p><strong>Eye Color:</strong> ${additionalInfo.Eye_Color}</p>
+            <p><strong>Place of Birth:</strong> ${additionalInfo.Birth_Place}</p>
+            <h2>Photos</h2>
+            <img src="${additionalInfo.Image_Front}" alt="Front View" style="width:200px;margin-right:10px;">
+            <img src="${additionalInfo.Image_Back}" alt="Back View" style="width:200px;margin-right:10px;">
+            <img src="${additionalInfo.Image_Side}" alt="Side View" style="width:200px;margin-right:10px;">
+            <br><br>
+            <button onclick="window.history.back()">Go Back</button>
+        `;
+
+        // Open a new window or tab with the case details
+        const newWindow = window.open();
+        newWindow.document.write(newPageContent);
+        newWindow.document.title = `Details of ${person.Name_Of_Suspact}`;
+    } else {
+        alert("No information found for this case number.");
+    }
+}
+
+// Event listener for form submission
+document.getElementById('searchForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const caseNumber = document.getElementById('caseNumber').value.trim();
+
+    // Check if case number exists
+    if (Most_Wanted[caseNumber]) {
+        showDetails(caseNumber);
+    } else {
+        document.getElementById('result').innerHTML = '<p id="error">No information found for this case number.</p>';
+    }
+});
+document.getElementById('searchForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const caseNumber = document.getElementById('caseNumber').value.trim();
+
+    // Check if case number exists
+    if (Most_Wanted[caseNumber]) {
+        // Redirect to suspect details page with case number in URL
+        window.location.href = `suspect-details.html?caseNumber=${caseNumber}`;
+    } else {
+        document.getElementById('result').innerHTML = '<p id="error">No information found for this case number.</p>';
+    }
+});
+
+    </script>
+</body>
+</html>
